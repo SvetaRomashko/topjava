@@ -1,15 +1,15 @@
 package ru.javawebinar.topjava.repository.inmemory;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Repository;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.MealRepository;
-import ru.javawebinar.topjava.util.DateTimeUtil;
 import ru.javawebinar.topjava.util.MealsUtil;
 import ru.javawebinar.topjava.web.SecurityUtil;
+import ru.javawebinar.topjava.web.meal.MealRestController;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -17,6 +17,8 @@ import java.util.stream.Collectors;
 
 @Repository
 public class InMemoryMealRepository implements MealRepository {
+
+
     private final Map<Integer, Meal> repository = new ConcurrentHashMap<>();
     private final AtomicInteger counter = new AtomicInteger(0);
 
@@ -39,7 +41,7 @@ public class InMemoryMealRepository implements MealRepository {
 
     @Override
     public boolean delete(int id) {
-        if (repository.get(id).getUserId() != SecurityUtil.authUserId())
+        if(SecurityUtil.authUserId() != repository.get(id).getUserId())
             return false;
         return repository.remove(id) != null;
     }

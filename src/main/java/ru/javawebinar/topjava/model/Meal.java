@@ -1,5 +1,6 @@
 package ru.javawebinar.topjava.model;
 
+import org.springframework.context.annotation.Bean;
 import ru.javawebinar.topjava.web.SecurityUtil;
 
 import java.time.LocalDate;

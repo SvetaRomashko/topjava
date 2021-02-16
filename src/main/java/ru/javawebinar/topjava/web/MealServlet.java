@@ -2,8 +2,10 @@ package ru.javawebinar.topjava.web;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Repository;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.MealRepository;
 import ru.javawebinar.topjava.repository.inmemory.InMemoryMealRepository;
@@ -31,19 +33,21 @@ import static ru.javawebinar.topjava.util.MealsUtil.filterByPredicate;
 public class MealServlet extends HttpServlet {
     private static final Logger log = LoggerFactory.getLogger(MealServlet.class);
 
+
     private MealRepository repository;
     private MealRestController mealRestController;
 
 
     @Override
     public void init() {
-        repository = new InMemoryMealRepository();
+       // repository = new InMemoryMealRepository();
 
         {
             try (
                     ConfigurableApplicationContext appCtx = new ClassPathXmlApplicationContext("spring/spring-app.xml")) {
                 // System.out.println("Bean definition names: " + Arrays.toString(appCtx.getBeanDefinitionNames()));
                 mealRestController = appCtx.getBean(MealRestController.class);
+                repository = appCtx.getBean(InMemoryMealRepository.class);
                 //  mealRestController.create(new Meal(LocalDateTime.of(2020, Month.JANUARY, 30, 10, 0), "Завтрак", 500));
             }
         }
@@ -81,7 +85,11 @@ public class MealServlet extends HttpServlet {
                 Integer.parseInt(request.getParameter("calories")));
 
         log.info(meal.isNew() ? "Create {}" : "Update {}", meal);
-        repository.save(meal);
+        //repository.save(meal);
+        if(meal.isNew())
+          mealRestController.create(meal);
+        else
+            mealRestController.update(meal,Integer.parseInt(id));
         response.sendRedirect("meals");
     }
 
@@ -93,15 +101,16 @@ public class MealServlet extends HttpServlet {
             case "delete":
                 int id = getId(request);
                 log.info("Delete {}", id);
-                repository.delete(id);
-                // mealRestController.delete(id);
+                //repository.delete(id);
+                 mealRestController.delete(id);
                 response.sendRedirect("meals");
                 break;
             case "create":
             case "update":
                 final Meal meal = "create".equals(action) ?
                         new Meal(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "", 1000) :
-                        repository.get(getId(request));
+                        //repository.get(getId(request));
+                        mealRestController.get(getId(request));
                 request.setAttribute("meal", meal);
                 request.getRequestDispatcher("/mealForm.jsp").forward(request, response);
                 break;
