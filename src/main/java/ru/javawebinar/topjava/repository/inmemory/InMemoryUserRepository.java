@@ -60,6 +60,8 @@ public class InMemoryUserRepository implements UserRepository {
             if(user.getEmail().equals(email))
                 return user;
         }
-        throw new NotFoundException("Not find user by email "+ email);
+        throw new NotFoundException("Not find user by email "+ email);*/
+
+      //  return getAll().stream().filter(m -> m.getEmail().equals(email)).findFirst().orElse(null);
     }
 }
