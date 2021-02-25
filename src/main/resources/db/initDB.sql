@@ -2,6 +2,7 @@ DROP TABLE IF EXISTS user_roles;
 drop table if exists meals;
 DROP TABLE IF EXISTS users;
 Drop index if exists user_id_dateTime_index;
+drop sequence if exists global_seq_meal;
 DROP SEQUENCE IF EXISTS global_seq;
 
 
