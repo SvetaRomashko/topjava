@@ -2,7 +2,6 @@ package ru.javawebinar.topjava.model;
 
 public abstract class AbstractBaseEntity {
     public static final int START_SEQ = 100000;
-    public static final int global_seq_meal = 10000;
 
     protected Integer id;
 

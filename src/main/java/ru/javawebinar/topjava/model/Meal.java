@@ -44,7 +44,6 @@ public class Meal extends AbstractBaseEntity {
     }
 
     public Meal() {
-        this(null, null, null, 0);
     }
 
     public LocalDateTime getDateTime() {
