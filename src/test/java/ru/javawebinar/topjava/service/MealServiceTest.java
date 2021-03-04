@@ -1,7 +1,14 @@
 package ru.javawebinar.topjava.service;
 
+import org.hsqldb.lib.StopWatch;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.ContextConfiguration;
@@ -9,10 +16,13 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit4.SpringRunner;
 import ru.javawebinar.topjava.model.Meal;
+import ru.javawebinar.topjava.model.User;
+import ru.javawebinar.topjava.repository.inmemory.InMemoryMealRepository;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.List;
 
 import static org.junit.Assert.assertThrows;
 import static ru.javawebinar.topjava.MealTestData.*;
@@ -26,6 +36,25 @@ import static ru.javawebinar.topjava.UserTestData.USER_ID;
 @RunWith(SpringRunner.class)
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 public class MealServiceTest {
+
+
+
+    @Rule
+    public TestName name = new TestName();
+    private static final Logger log = LoggerFactory.getLogger(MealServiceTest.class);
+
+    private Long start;
+
+    @Before
+    public void before(){
+        start = System.currentTimeMillis();
+    }
+
+    @After
+    public void after(){
+        log.info("Test "+name.getMethodName() + " took "+(System.currentTimeMillis() - start)+" ms");
+        System.out.println("Test "+name.getMethodName() + " took "+(System.currentTimeMillis() - start)+" ms");
+    }
 
     @Autowired
     private MealService service;
@@ -96,6 +125,7 @@ public class MealServiceTest {
     public void getAll() {
         MEAL_MATCHER.assertMatch(service.getAll(USER_ID), meals);
     }
+
 
     @Test
     public void getBetweenInclusive() {
