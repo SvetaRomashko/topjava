@@ -1,11 +1,9 @@
 package ru.javawebinar.topjava.repository.datajpa;
 
-import org.springframework.data.domain.Sort;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+
 import org.springframework.stereotype.Repository;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.MealRepository;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -15,9 +13,7 @@ public class DataJpaMealRepository implements MealRepository {
     private final CrudMealRepository crudRepository;
     private final CrudUserRepository crudUserRepository;
 
-    private static final Sort SORT_DataTime = Sort.by(Sort.Direction.DESC, "dateTime");
-
-    public DataJpaMealRepository(CrudMealRepository crudRepository, CrudUserRepository crudUserRepository) {
+        public DataJpaMealRepository(CrudMealRepository crudRepository, CrudUserRepository crudUserRepository) {
         this.crudRepository = crudRepository;
         this.crudUserRepository = crudUserRepository;
     }

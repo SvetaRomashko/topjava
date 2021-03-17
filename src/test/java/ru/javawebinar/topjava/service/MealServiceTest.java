@@ -56,10 +56,6 @@ public class MealServiceTest {
     @Autowired
     private CacheManager cacheManager;
 
-  //  @Before
-   // public void setup() {
-   //     cacheManager.getCache("meals").clear();
-  //  }
 
     @AfterClass
     public static void printResult() {
