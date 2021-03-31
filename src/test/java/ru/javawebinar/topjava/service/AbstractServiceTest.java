@@ -5,6 +5,7 @@ import org.junit.Rule;
 import org.junit.rules.ExternalResource;
 import org.junit.rules.Stopwatch;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
@@ -35,7 +36,7 @@ abstract public class AbstractServiceTest {
     @Rule
     public Stopwatch stopwatch = TimingRules.STOPWATCH;
 
-    @Resource
+    @Autowired
     private Environment environment;
 
 
