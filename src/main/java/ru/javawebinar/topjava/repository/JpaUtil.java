@@ -2,10 +2,13 @@ package ru.javawebinar.topjava.repository;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Lazy;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+@Lazy
 public class JpaUtil {
 
     @PersistenceContext
