@@ -1,5 +1,8 @@
 package ru.javawebinar.topjava;
 
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import ru.javawebinar.topjava.model.Role;
 import ru.javawebinar.topjava.model.User;
 
@@ -32,4 +35,6 @@ public class UserTestData {
         updated.setRoles(Collections.singletonList(Role.ADMIN));
         return updated;
     }
+
+
 }
